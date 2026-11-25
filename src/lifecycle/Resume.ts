@@ -74,7 +74,7 @@ interface Away {
 
 /**
  * Keeps sessions resumable and brings players back after a node reconnect or a bot restart,
- * continuing from where listeners actually stopped hearing audio (PHASE2B §9).
+ * continuing from where listeners stopped hearing audio.
  */
 export class Resume {
   readonly #host: ResumeHost;

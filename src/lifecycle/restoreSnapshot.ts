@@ -46,9 +46,8 @@ export interface RestoreContext {
 }
 
 /**
- * Rebuilds a player from a saved snapshot after a restart, following the `auto` rules of
- * PHASE2B §9.3. After a restart the Discord voice connection is always gone, so voice is always
- * joined again.
+ * Rebuilds a player from a saved snapshot after a restart. The Discord voice connection never
+ * survives a restart, so voice is always joined again.
  *
  * @param snapshot - The saved player.
  * @param context - Node, players and server state.
