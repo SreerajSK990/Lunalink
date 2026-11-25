@@ -41,6 +41,8 @@ export default tseslint.config(
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-inferrable-types": "off",
       "@typescript-eslint/dot-notation": "off",
+      "@typescript-eslint/no-redundant-type-constituents": "off",
+      "@typescript-eslint/no-empty-object-type": ["error", { allowInterfaces: "always" }],
       "@typescript-eslint/explicit-module-boundary-types": "error",
       "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/consistent-type-exports": "error",
