@@ -91,11 +91,25 @@ describe("VoiceBridge", () => {
     const { bridge, pushes } = setup(() => (++calls === 1 ? first : Promise.resolve()));
     const joining = bridge.join("300000000000000003");
     bridge.handleStateUpdate(state("300000000000000003"));
+    await Promise.resolve();
     bridge.handleServerUpdate(server("t1"));
+    await vi.waitFor(() => {
+      expect(pushes).toHaveLength(1);
+    });
     bridge.handleServerUpdate(server("t2"));
     release();
     await joining;
     expect(pushes.map((voice) => voice.token)).toEqual(["t1", "t2"]);
+  });
+
+  it("only sends the newest credentials when packets arrive together", async () => {
+    const { bridge, pushes } = setup();
+    const joining = bridge.join("300000000000000003");
+    bridge.handleStateUpdate(state("300000000000000003"));
+    bridge.handleServerUpdate(server("t1"));
+    bridge.handleServerUpdate(server("t2"));
+    await joining;
+    expect(pushes.map((voice) => voice.token)).toEqual(["t2"]);
   });
 
   it("times out and names the missing packet", async () => {
