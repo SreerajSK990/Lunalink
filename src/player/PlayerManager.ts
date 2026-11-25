@@ -29,7 +29,7 @@ export class PlayerManager {
   readonly #players = new Map<string, Player>();
   readonly #nodes: NodeManager;
   readonly #runtime: PlayerRuntime<Player>;
-  readonly #playerClass: PlayerClass;
+  #playerClass: PlayerClass;
   readonly #played = new Set<string>();
 
   /**
@@ -55,6 +55,15 @@ export class PlayerManager {
         runtime.onDestroyed(player);
       },
     };
+  }
+
+  /**
+   * Changes the class new players are built from. Players that already exist keep theirs.
+   *
+   * @param playerClass - Player class, or `undefined` for the built-in one.
+   */
+  setPlayerClass(playerClass: PlayerClass | undefined): void {
+    this.#playerClass = playerClass ?? Player;
   }
 
   /**
