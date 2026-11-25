@@ -40,6 +40,7 @@ export default tseslint.config(
       "lunalink/jsdoc-only-comments": "error",
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-inferrable-types": "off",
+      "@typescript-eslint/dot-notation": "off",
       "@typescript-eslint/explicit-module-boundary-types": "error",
       "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/consistent-type-exports": "error",
@@ -97,6 +98,9 @@ export default tseslint.config(
     files: ["test/**/*.ts"],
     rules: {
       "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/unbound-method": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-empty-function": "off",
       "max-lines": "off",
     },
   },

@@ -10,6 +10,7 @@ export default defineConfig({
   platform: "neutral",
   target: "node22",
   dts: true,
+  tsconfig: "tsconfig.lib.json",
   fixedExtension: true,
   sourcemap: true,
   clean: true,

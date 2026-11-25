@@ -70,7 +70,7 @@
   },
   "scripts": {
     "build": "tsdown",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.lib.json",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
