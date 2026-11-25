@@ -9,4 +9,4 @@ export {
   type RestErrorInit,
 } from "./errors/index.js";
 export { formatDuration, parseDuration } from "./utils/index.js";
-export type * from "./protocol/index.js";
+export * from "./protocol/index.js";

@@ -1,4 +1,5 @@
 import type { ApiEventBase } from "./events.js";
+import type { ApiNodeLinkStats } from "./nodelink/stats.js";
 import type { ApiPlayerState } from "./player.js";
 import type { ApiLavalinkStats } from "./stats.js";
 
@@ -27,12 +28,10 @@ export interface ApiPlayerUpdateMessage {
 }
 
 /**
- * Sent about once a minute with server statistics.
+ * Sent regularly with server statistics: every minute on Lavalink, every 30 seconds by default
+ * on NodeLink.
  */
-export interface ApiStatsMessage extends ApiLavalinkStats {
-  /** Always `stats`. */
-  op: "stats";
-}
+export type ApiStatsMessage = { op: "stats" } & (ApiLavalinkStats | ApiNodeLinkStats);
 
 /**
  * Any message the server can send over the WebSocket. Events are kept open-ended because

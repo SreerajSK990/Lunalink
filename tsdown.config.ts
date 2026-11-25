@@ -4,6 +4,7 @@ export default defineConfig({
   entry: {
     index: "src/index.ts",
     protocol: "src/protocol/index.ts",
+    "transport/ws": "src/entries/transportWs.ts",
   },
   format: ["esm", "cjs"],
   platform: "neutral",

@@ -56,6 +56,16 @@
         "default": "./dist/protocol.cjs"
       }
     },
+    "./transport/ws": {
+      "import": {
+        "types": "./dist/transport/ws.d.mts",
+        "default": "./dist/transport/ws.mjs"
+      },
+      "require": {
+        "types": "./dist/transport/ws.d.cts",
+        "default": "./dist/transport/ws.cjs"
+      }
+    },
     "./package.json": "./package.json"
   },
   "scripts": {

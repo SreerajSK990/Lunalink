@@ -101,6 +101,50 @@ export type {
   ApiSponsorBlockSegment,
 } from "./plugins/sponsorBlock.js";
 export type {
+  ApiNodeLinkInfo,
+  ApiNodeLinkPluginInfo,
+  ApiNodeLinkVersion,
+} from "./nodelink/info.js";
+export type {
+  ApiNodeLinkCpuStats,
+  ApiNodeLinkFrameStats,
+  ApiNodeLinkStats,
+} from "./nodelink/stats.js";
+export type {
+  ApiNodeLinkLiveLyrics,
+  ApiNodeLinkLiveLyricsLine,
+  ApiNodeLinkLyricsData,
+  ApiNodeLinkLyricsLine,
+  ApiNodeLinkLyricsResult,
+} from "./nodelink/lyrics.js";
+export type {
+  ApiNodeLinkChapter,
+  ApiNodeLinkConnection,
+  ApiNodeLinkConnectionStatus,
+  ApiNodeLinkEncodeInput,
+  ApiNodeLinkMeaning,
+  ApiNodeLinkMeaningResult,
+  ApiNodeLinkMixLayer,
+  ApiNodeLinkSponsorBlockSegment,
+  ApiNodeLinkSponsorBlockState,
+  ApiNodeLinkSponsorBlockUpdate,
+} from "./nodelink/rest.js";
+export type {
+  ApiNodeLinkCrossfade,
+  ApiNodeLinkFadeSection,
+  ApiNodeLinkFadeType,
+  ApiNodeLinkFading,
+  ApiNodeLinkUpdatePlayer,
+  ApiNodeLinkUpdatePlayerTrack,
+} from "./nodelink/player.js";
+export type {
+  ApiNodeLinkEvent,
+  ApiNodeLinkEventPayloads,
+  ApiNodeLinkEventType,
+  ApiNodeLinkTrackEndReason,
+} from "./nodelink/events.js";
+export { VoiceFrameFormat, VoiceFrameOp, type VoiceFrame } from "./nodelink/voiceFrames.js";
+export type {
   ApiDspxEchoFilter,
   ApiDspxHighPassFilter,
   ApiDspxLowPassFilter,
