@@ -1,6 +1,8 @@
 import type { GatewayAdapter, GatewayPacket, GatewaySender } from "../index.js";
 import { toDispatch } from "./shared.js";
 
+export { shardIdFor } from "./shared.js";
+
 /**
  * What a raw-gateway bot provides.
  */
