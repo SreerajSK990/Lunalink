@@ -55,15 +55,15 @@ module.exports = {
     {
       name: "extensions-use-public-api",
       comment:
-        "adapters, built-in stores and built-in plugins only use the public barrel or protocol types",
+        "adapters, built-in stores, built-in plugins and the testing kit only use the public barrel or protocol types",
       severity: "error",
-      from: { path: "^src/(adapters|stores-builtin|plugins-builtin)/" },
+      from: { path: "^src/(adapters|stores-builtin|plugins-builtin|testing)/" },
       to: {
         path: "^src/",
         pathNot: [
           "^src/index\\.ts$",
           "^src/protocol/",
-          "^src/(adapters|stores-builtin|plugins-builtin)/",
+          "^src/(adapters|stores-builtin|plugins-builtin|testing)/",
         ],
       },
     },

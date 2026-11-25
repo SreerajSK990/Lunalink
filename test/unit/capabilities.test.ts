@@ -61,7 +61,7 @@ describe("resolveCapabilities", () => {
 
   it("only gives DAVE to Lavalink 4.2 and later", () => {
     const old = lavalinkInfo();
-    old.version = { semver: "4.1.2", major: 4, minor: 1, patch: 2, preRelease: null };
+    old["version"] = { semver: "4.1.2", major: 4, minor: 1, patch: 2, preRelease: null };
     expect(resolveCapabilities("old", contextFor("lavalink", old)).has("voice:dave")).toBe(false);
   });
 

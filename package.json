@@ -66,6 +66,96 @@
         "default": "./dist/transport/ws.cjs"
       }
     },
+    "./plugin": {
+      "import": {
+        "types": "./dist/plugin.d.mts",
+        "default": "./dist/plugin.mjs"
+      },
+      "require": {
+        "types": "./dist/plugin.d.cts",
+        "default": "./dist/plugin.cjs"
+      }
+    },
+    "./testing": {
+      "import": {
+        "types": "./dist/testing.d.mts",
+        "default": "./dist/testing.mjs"
+      },
+      "require": {
+        "types": "./dist/testing.d.cts",
+        "default": "./dist/testing.cjs"
+      }
+    },
+    "./adapters/discordjs": {
+      "import": {
+        "types": "./dist/adapters/discordjs.d.mts",
+        "default": "./dist/adapters/discordjs.mjs"
+      },
+      "require": {
+        "types": "./dist/adapters/discordjs.d.cts",
+        "default": "./dist/adapters/discordjs.cjs"
+      }
+    },
+    "./adapters/eris": {
+      "import": {
+        "types": "./dist/adapters/eris.d.mts",
+        "default": "./dist/adapters/eris.mjs"
+      },
+      "require": {
+        "types": "./dist/adapters/eris.d.cts",
+        "default": "./dist/adapters/eris.cjs"
+      }
+    },
+    "./adapters/oceanic": {
+      "import": {
+        "types": "./dist/adapters/oceanic.d.mts",
+        "default": "./dist/adapters/oceanic.mjs"
+      },
+      "require": {
+        "types": "./dist/adapters/oceanic.d.cts",
+        "default": "./dist/adapters/oceanic.cjs"
+      }
+    },
+    "./adapters/seyfert": {
+      "import": {
+        "types": "./dist/adapters/seyfert.d.mts",
+        "default": "./dist/adapters/seyfert.mjs"
+      },
+      "require": {
+        "types": "./dist/adapters/seyfert.d.cts",
+        "default": "./dist/adapters/seyfert.cjs"
+      }
+    },
+    "./adapters/raw": {
+      "import": {
+        "types": "./dist/adapters/raw.d.mts",
+        "default": "./dist/adapters/raw.mjs"
+      },
+      "require": {
+        "types": "./dist/adapters/raw.d.cts",
+        "default": "./dist/adapters/raw.cjs"
+      }
+    },
+    "./stores/memory": {
+      "import": {
+        "types": "./dist/stores/memory.d.mts",
+        "default": "./dist/stores/memory.mjs"
+      },
+      "require": {
+        "types": "./dist/stores/memory.d.cts",
+        "default": "./dist/stores/memory.cjs"
+      }
+    },
+    "./stores/json-file": {
+      "import": {
+        "types": "./dist/stores/json-file.d.mts",
+        "default": "./dist/stores/json-file.mjs"
+      },
+      "require": {
+        "types": "./dist/stores/json-file.d.cts",
+        "default": "./dist/stores/json-file.cjs"
+      }
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
