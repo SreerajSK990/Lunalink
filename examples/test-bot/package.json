@@ -1,0 +1,23 @@
+{
+  "name": "lunalink-test-bot",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A discord.js v14 bot that exercises every Lunalink feature.",
+  "scripts": {
+    "start": "tsx --env-file=.env src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "discord.js": "^14.28.1",
+    "lunalink": "file:../.."
+  },
+  "devDependencies": {
+    "@types/node": "26.6.7",
+    "tsx": "^4.20.0",
+    "typescript": "6.0.3"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
