@@ -32,6 +32,18 @@ import type { DestroyReason, PlaybackState, PlayerOptions, PlayOptions } from ".
 export type PlayerQueue = Register extends { queue: infer Q } ? Q : MemoryQueue;
 
 /**
+ * Server state handed to {@link Player.adopt}.
+ */
+export interface AdoptState {
+  /** Position in milliseconds. */
+  position: number;
+  /** Whether the node has it paused. */
+  paused: boolean;
+  /** Volume on the node. */
+  volume: number;
+}
+
+/**
  * A music player for one guild. Create one with `lunalink.players.create()`.
  *
  * @example
@@ -434,25 +446,42 @@ export class Player {
       this.#assertAlive();
       if (target === this.#node) return;
       const from = this.#node;
-      const position = this.position;
       this.#node = target;
-      const voice = this.voice.credentials();
-      await this.#updater.update({
-        ...(voice ? { voice } : {}),
-        ...(this.#current
-          ? {
-              track: { encoded: this.#current.encoded, userData: { ...this.#current.userData } },
-              position,
-            }
-          : {}),
-        volume: this.#volume,
-        paused: this.#state === "paused",
-        filters: this.filters.state,
-      });
-      this.#clock.set(position);
+      await this.#push(this.position);
       if (from.connected) void this.#updater.destroy(from).catch(() => undefined);
       this.#runtime.emit("playerNodeChange", this, from.id, target.id);
     });
+  }
+
+  /**
+   * Sends the whole player state to its node again: voice, the track at a position, volume,
+   * pause and filters. Auto-resume uses it when the node lost the player.
+   *
+   * @param position - Where to continue, in milliseconds. Defaults to the current position.
+   * @returns Resolves once the node took it.
+   */
+  resync(position: number = this.position): Promise<void> {
+    return this.#exclusive(async () => {
+      this.#assertAlive();
+      await this.#push(position);
+    });
+  }
+
+  /**
+   * Takes over a player the node still has, without sending anything to the node. Auto-resume
+   * uses it after a restart, when the server kept playing.
+   *
+   * @param track - The track the node is playing, or `null`.
+   * @param state - Position, pause and volume as the node reports them.
+   */
+  adopt(track: Track | null, state: AdoptState): void {
+    this.#assertAlive();
+    this.#current = track;
+    this.#volume = state.volume;
+    this.#state = track ? (state.paused ? "paused" : "playing") : "idle";
+    if (track) {
+      this.#clock.reset(track.isStream ? 0 : track.duration, state.position, state.paused);
+    }
   }
 
   /**
@@ -555,6 +584,23 @@ export class Player {
         this.#debug(level, message, data);
       },
     };
+  }
+
+  async #push(position: number): Promise<void> {
+    const voice = this.voice.credentials();
+    await this.#updater.update({
+      ...(voice ? { voice } : {}),
+      ...(this.#current
+        ? {
+            track: { encoded: this.#current.encoded, userData: { ...this.#current.userData } },
+            position,
+          }
+        : {}),
+      volume: this.#volume,
+      paused: this.#state === "paused",
+      filters: this.filters.state,
+    });
+    this.#clock.set(position);
   }
 
   #exclusive<T>(task: () => Promise<T>): Promise<T> {
