@@ -78,6 +78,7 @@ const HEARTBEAT = "heartbeat:";
 const SESSION = "session:";
 const LAST_ALIVE = "process:lastAliveAt";
 const DOWNTIMES = "resume:downtimes";
+const PAUSED_FOR_RESTART = "process:pausedForRestart";
 
 /**
  * Saves a snapshot of every player on each state change, plus a light position heartbeat, so
@@ -164,34 +165,23 @@ export class Persistence {
   }
 
   /**
-   * Writes one heartbeat now: the position of every playing player and `lastAliveAt`.
+   * Writes one heartbeat now: the position of every playing player and `lastAliveAt`. It also
+   * schedules a full snapshot of every player, so changes that emit no event (volume, pause,
+   * filters) are saved too.
    */
   async beat(): Promise<void> {
-    const at = Date.now();
-    const store = this.#host.store;
-    try {
-      for (const player of this.#host.players()) {
-        if (player.playing) {
-          await store.set(HEARTBEAT + player.guildId, { position: player.position, at });
-        }
-      }
-      await store.set(LAST_ALIVE, at);
-    } catch (error) {
-      this.#fail("Writing the heartbeat failed", error);
-    }
+    await this.#writeHeartbeats();
+    for (const player of this.#host.players()) this.schedule(player);
   }
 
   /**
-   * Saves every pending snapshot and one last heartbeat. Call it before shutting down.
+   * Saves a snapshot of every player and one last heartbeat. Call it before shutting down.
    */
   async flush(): Promise<void> {
-    const pending = [...this.#pending.values()];
+    for (const { timer } of this.#pending.values()) clearTimeout(timer);
     this.#pending.clear();
-    for (const { player, timer } of pending) {
-      clearTimeout(timer);
-      await this.save(player);
-    }
-    await this.beat();
+    for (const player of this.#host.players()) await this.save(player);
+    await this.#writeHeartbeats();
   }
 
   /**
@@ -296,6 +286,48 @@ export class Persistence {
   async downtimes(): Promise<number[]> {
     const value = await this.#host.store.get(DOWNTIMES);
     return Array.isArray(value) ? value.filter((v): v is number => typeof v === "number") : [];
+  }
+
+  /**
+   * Remembers which guilds were paused for a planned restart, so they unpause on start.
+   *
+   * @param guildIds - Guilds that were playing before the pause.
+   */
+  async markPausedForRestart(guildIds: readonly string[]): Promise<void> {
+    try {
+      await this.#host.store.set(PAUSED_FOR_RESTART, [...guildIds]);
+    } catch (error) {
+      this.#fail("Saving the restart pause list failed", error);
+    }
+  }
+
+  /**
+   * Reads and clears the guilds paused for a planned restart.
+   *
+   * @returns Guild ids.
+   */
+  async takePausedForRestart(): Promise<Set<string>> {
+    const store = this.#host.store;
+    const value = await store.get(PAUSED_FOR_RESTART);
+    await store.delete(PAUSED_FOR_RESTART);
+    return new Set(
+      Array.isArray(value) ? value.filter((v): v is string => typeof v === "string") : [],
+    );
+  }
+
+  async #writeHeartbeats(): Promise<void> {
+    const at = Date.now();
+    const store = this.#host.store;
+    try {
+      for (const player of this.#host.players()) {
+        if (player.playing) {
+          await store.set(HEARTBEAT + player.guildId, { position: player.position, at });
+        }
+      }
+      await store.set(LAST_ALIVE, at);
+    } catch (error) {
+      this.#fail("Writing the heartbeat failed", error);
+    }
   }
 
   #fail(message: string, error: unknown, guildId?: string): void {

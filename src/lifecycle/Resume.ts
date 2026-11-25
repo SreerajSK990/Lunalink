@@ -139,6 +139,10 @@ export class Resume {
     if (!this.#options.enabled || !persistence) return 0;
     this.#lastAliveAt = await persistence.lastAliveAt();
     const snapshots = await persistence.loadAll();
+    const unpause = await persistence.takePausedForRestart();
+    for (const snapshot of snapshots) {
+      if (unpause.has(snapshot.guildId)) snapshot.paused = false;
+    }
     for (const snapshot of snapshots) {
       if (this.#host.players.has(snapshot.guildId)) continue;
       const list = this.#pending.get(snapshot.nodeId) ?? [];
