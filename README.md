@@ -4,8 +4,18 @@ A TypeScript client for [Lavalink](https://github.com/lavalink-devs/Lavalink) v4
 
 - **No runtime dependencies.** It uses Node's built-in `fetch` and `WebSocket`. It ships ESM and CommonJS builds and needs Node 22 or later.
 - **One API for both servers.** Lunalink detects whether each node is Lavalink or NodeLink and what it supports, and normalizes the differences. Features a node lacks throw `UnsupportedFeatureError` instead of failing silently.
-- **What a music bot needs:** queue with history, loop modes, autoplay, filters and presets, lyrics, SponsorBlock, chapters, LavaSearch, NodeLink's crossfade, mixer and loudness tools, auto-leave, failover between nodes, and auto-resume after a node reconnect or a bot restart.
+- **Everything a music bot needs:** a queue with history, loop modes, autoplay, filters and presets, lyrics, SponsorBlock, chapters, LavaSearch, NodeLink's crossfade, mixer and loudness tools, auto-leave, failover between nodes, and auto-resume after a node reconnect or a bot restart.
 - **Extendable.** Plugins can add client-side sources, hooks, autoplay strategies, presets and events, or replace the queue, store, player class, track factory, node selector and mirror matcher.
+
+## Status
+
+Version 0.1.0, not yet published to npm. The test suite runs against a mock Lavalink and NodeLink server; testing against real servers is in progress with the [manual checklist](docs/TESTING.md). Expect small API changes before 1.0.
+
+## Requirements
+
+- Node.js 22 or later
+- Lavalink 4.x or NodeLink 3.x
+- A Discord bot with the `Guilds` and `GuildVoiceStates` intents
 
 ## Install
 
@@ -77,6 +87,10 @@ Using Eris, Oceanic, Seyfert or your own gateway code? See [docs/adapters.md](do
 
 The [example bot](examples/test-bot) has a slash command for every feature.
 
+## Contributing
+
+Bug reports and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) first; it covers setup, the rules every change follows, and how to test against real servers.
+
 ## License
 
-MIT
+[MIT](LICENSE)

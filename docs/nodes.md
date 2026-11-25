@@ -4,20 +4,20 @@ A node is one Lavalink or NodeLink server. Pass them in `nodes`:
 
 ```ts
 nodes: [
-  { id: "eu-1", host: "eu.example.com", port: 443, password: "…", secure: true, regions: ["eu"] },
-  { id: "us-1", host: "us.example.com", port: 2333, password: "…", regions: ["us"] },
+  { id: "eu-1", host: "eu.example.com", port: 443, password: "...", secure: true, regions: ["eu"] },
+  { id: "us-1", host: "us.example.com", port: 2333, password: "...", regions: ["us"] },
 ],
 ```
 
 | Option                     | Default                                | Meaning                                                                      |
 | -------------------------- | -------------------------------------- | ---------------------------------------------------------------------------- |
 | `id`                       | `host:port`                            | Unique name, used in logs and `lunalink.nodes.get(id)`                       |
-| `host`, `port`, `password` | —                                      | Where the server is                                                          |
+| `host`, `port`, `password` | required                               | Where the server is                                                          |
 | `secure`                   | `false`                                | Use `https` and `wss`                                                        |
 | `type`                     | `"auto"`                               | Force `"lavalink"` or `"nodelink"` instead of detecting it                   |
 | `regions`                  | `[]`                                   | Discord voice regions this node serves, for example `["us", "eu"]`           |
 | `priority`                 | `0`                                    | Used by the `priority` selection strategy                                    |
-| `sessionId`                | —                                      | A session to resume on the first connect                                     |
+| `sessionId`                | none                                   | A session to resume on the first connect                                     |
 | `requestTimeoutMs`         | `10000`                                | REST timeout                                                                 |
 | `reconnect`                | 1 s base, 30 s max, unlimited attempts | `{ baseDelayMs, maxDelayMs, maxAttempts }` with jittered backoff             |
 | `silenceTimeoutMs`         | `150000`                               | Reconnect when nothing arrives on the socket for this long. `0` turns it off |

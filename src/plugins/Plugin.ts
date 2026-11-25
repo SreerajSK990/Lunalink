@@ -17,7 +17,7 @@ export type PluginTeardown = () => void | Promise<void>;
  *
  * @example
  * ```ts
- * export const nowPlayingLogger = (prefix = "▶") =>
+ * export const nowPlayingLogger = (prefix = "Now playing:") =>
  *   definePlugin({
  *     name: "now-playing-logger",
  *     version: "1.0.0",

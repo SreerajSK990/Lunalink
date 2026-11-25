@@ -5,7 +5,7 @@ A plugin is an object with a name, a version, the plugin API version it was writ
 ```ts
 import { definePlugin } from "lunalink/plugin";
 
-export const nowPlayingLog = (prefix = "▶") =>
+export const nowPlayingLog = (prefix = "Now playing:") =>
   definePlugin({
     name: "now-playing-log",
     version: "1.0.0",
@@ -72,7 +72,7 @@ Items can be:
 
 - an `UnresolvedTrack` (`UnresolvedTrack.create({ title, author, durationMs, isrc, uri, artworkUrl })`): metadata only. Lunalink finds a playable copy right before it plays.
 - a `Track`: already playable.
-- `{ identifier }`: something the node can load, such as a direct link or `ytsearch:…`.
+- `{ identifier }`: something the node can load, such as a direct link or `ytsearch:...`.
 - `{ encoded, info }`: a playable track in the node's format.
 
 Matching resolvers run by priority. One that throws, times out or returns nothing passes the query on to the next one, then to the node, unless it sets `fallthrough: false`. Results are shape-checked, and errors name the plugin and the item (`radio/stations: items[3] missing title`). `lunalink.plugins.explain(query)` lists every resolver and whether it matches.
@@ -92,7 +92,7 @@ Return `undefined` to change nothing. Higher `priority` runs first.
 ## Events
 
 - `ctx.events.on(name, listener)`: any Lunalink event. Errors are reported, not thrown.
-- `ctx.events.emit("myplugin:thing", ...args)`: your own events. Names must start with `<plugin name>:`. Users listen with `lunalink.on("myplugin:thing", …)`. Type them by merging into `LunalinkCustomEvents`:
+- `ctx.events.emit("myplugin:thing", ...args)`: your own events. Names must start with `<plugin name>:`. Users listen with `lunalink.on("myplugin:thing", listener)`. Type them by merging into `LunalinkCustomEvents`:
 
   ```ts
   declare module "lunalink" {
@@ -102,7 +102,7 @@ Return `undefined` to change nothing. Higher `priority` runs first.
   }
   ```
 
-- `ctx.events.intercept(name, (event) => { … }, { priority })`: runs before listeners see an event. Call `event.suppress(reason)` to hide it (for example `trackStart` for a silent intro), or return a promise to hold it until it settles. Arguments can't be changed, so one plugin can't break another; emit your own event instead. Suppression is logged in `debug`. Lunalink's own lifecycle (auto-leave, autoplay, persistence) sees every event, suppressed or not.
+- `ctx.events.intercept(name, interceptor, { priority })`: runs before listeners see an event. Call `event.suppress(reason)` to hide it (for example `trackStart` for a silent intro), or return a promise to hold it until it settles. Arguments can't be changed, so one plugin can't break another; emit your own event instead. Suppression is logged in `debug`. Lunalink's own lifecycle (auto-leave, autoplay, persistence) sees every event, suppressed or not.
 - `ctx.events.registerMapper("SomeServerEvent", (payload, player) => ({ name: "myplugin:some", args: [payload] }))`: turns a server event Lunalink doesn't know into a plugin event.
 
 ## Slots

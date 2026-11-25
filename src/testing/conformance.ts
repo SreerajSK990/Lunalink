@@ -51,7 +51,7 @@ export interface ConformanceOptions {
  * @example
  * ```ts
  * const report = await checkNodeConformance({ node: { host: "localhost", port: 2333, password: "youshallnotpass" } });
- * for (const check of report.checks) console.log(check.ok ? "✓" : "✗", check.name, check.detail ?? "");
+ * for (const check of report.checks) console.log(check.ok ? "ok  " : "FAIL", check.name, check.detail ?? "");
  * ```
  * @param options - The server and test values.
  * @returns The report.

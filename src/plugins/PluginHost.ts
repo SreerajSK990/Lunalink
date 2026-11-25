@@ -269,7 +269,7 @@ export class PluginHost {
       if (state.get(name) === "visiting") {
         throw new LunalinkError(
           ErrorCode.PluginConflict,
-          `Plugin dependency cycle: ${[...path, name].join(" → ")}`,
+          `Plugin dependency cycle: ${[...path, name].join(" -> ")}`,
         );
       }
       const entry = this.#installed.get(name);

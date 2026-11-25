@@ -127,7 +127,7 @@ const debug: Command = {
           report.checks
             .map(
               (check) =>
-                `${check.ok ? "✅" : "❌"} ${check.name}${check.detail ? `: ${check.detail}` : ""}`,
+                `${check.ok ? "PASS" : "FAIL"} ${check.name}${check.detail ? `: ${check.detail}` : ""}`,
             )
             .join("\n"),
         );

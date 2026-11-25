@@ -1,6 +1,6 @@
 # Manual test checklist
 
-Run these against the [example bot](../examples/test-bot) with one Lavalink and one NodeLink node. Tick each box on both servers where it applies; a ✗ on a server that lacks the feature should be a clear "not supported" message, not a crash.
+Run these against the [example bot](../examples/test-bot) with one Lavalink and one NodeLink node. Check each item on both servers where it applies. On a server that lacks a feature, the bot must answer with a clear "not supported" message, never a stack trace.
 
 Setup:
 
@@ -19,9 +19,9 @@ Setup:
 
 ## Playback
 
-- [ ] `/play query:<text>`: queues the first result; it starts and "▶" is posted.
+- [ ] `/play query:<text>`: queues the first result; it starts and "Now playing" is posted.
 - [ ] `/play` with a YouTube link, a SoundCloud link and a playlist link: one track, or every playlist track.
-- [ ] `/play source:spotify` on a node without Spotify: "Searching spotify needs the spotify source…".
+- [ ] `/play source:spotify` on a node without Spotify: "Searching spotify needs the spotify source on the node."
 - [ ] `/play next:true`: the track goes to the front of the queue.
 - [ ] `/play query:radio:lofi`: the radio plugin answers; a live stream starts; `/nowplaying` shows "live".
 - [ ] `/pause`, `/resume`: audio stops and continues at the same point.
@@ -58,7 +58,7 @@ Setup:
 
 - [ ] `/lyrics`: shows lyrics and the backend (NodeLink, LavaLyrics or lyrics.kt).
 - [ ] `/lyrics live:true`: lines are posted as they're sung. `live:false` stops it.
-- [ ] `/sponsorblock categories:sponsor,selfpromo` on a YouTube video with a sponsor segment: "⏭ Skipped a sponsor segment."
+- [ ] `/sponsorblock categories:sponsor,selfpromo` on a YouTube video with a sponsor segment: "Skipped a sponsor segment."
 - [ ] `/sponsorblock` with no categories: off.
 - [ ] `/chapters` on a video with chapters: timestamps and names.
 - [ ] `/richsearch query:<artist>` on a node with LavaSearch: tracks, albums, artists, playlists. Without it: a clear "not supported".
@@ -78,7 +78,7 @@ On a Lavalink node each of these must answer with "not supported", not an error 
 - [ ] `/nodes`: both nodes, their kind, version, state, load and player count.
 - [ ] `/movenode node:nodelink` while playing on Lavalink (and back): playback continues at the same position.
 - [ ] Stop the node a player is on: after about 10 seconds the player moves to the other node and keeps playing.
-- [ ] Restart the node within 10 seconds instead: no move; the player resumes (`↻ Resumed (seamless…)` or `rejoined`).
+- [ ] Restart the node within 10 seconds instead: no move; the player resumes ("Resumed (seamless, ...)" or "rejoined").
 - [ ] `/restart`: the bot pauses, saves and exits. Start it again: the player rejoins and continues from where it paused.
 - [ ] Kill the bot process (no clean shutdown) while playing, start it again within a minute: it rejoins and continues close to where listeners stopped (`rebuilt` or `rejoined`, with a gap).
 - [ ] Leave the channel empty during a restart: the player comes back paused (`held`), then auto-leaves.
@@ -95,4 +95,4 @@ On a Lavalink node each of these must answer with "not supported", not an error 
 - [ ] `/debug plugins`: `radio` is `active`.
 - [ ] `/debug explain query:radio:jazz`: handled by `radio/stations`. `query:hello`: handled by the node.
 - [ ] `/debug log level:trace`, then `level:off`.
-- [ ] `/debug conformance id:lavalink` and `id:nodelink`: every check ✅.
+- [ ] `/debug conformance id:lavalink` and `id:nodelink`: every check is PASS.
