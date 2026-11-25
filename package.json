@@ -1,0 +1,90 @@
+{
+  "name": "lunalink",
+  "version": "0.1.0",
+  "description": "A typed Lavalink v4 and NodeLink client for Discord music bots, with zero runtime dependencies.",
+  "license": "MIT",
+  "author": "SreerajSK990",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SreerajSK990/Lunalink.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SreerajSK990/Lunalink/issues"
+  },
+  "homepage": "https://github.com/SreerajSK990/Lunalink#readme",
+  "keywords": [
+    "lavalink",
+    "nodelink",
+    "discord",
+    "music",
+    "bot",
+    "audio",
+    "typescript"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./protocol": {
+      "import": {
+        "types": "./dist/protocol.d.mts",
+        "default": "./dist/protocol.mjs"
+      },
+      "require": {
+        "types": "./dist/protocol.d.cts",
+        "default": "./dist/protocol.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "deps:check": "depcruise src --config .dependency-cruiser.cjs",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm run deps:check && npm run test && npm run build",
+    "changeset": "changeset",
+    "release": "npm run check && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "3.0.3",
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.6.7",
+    "@types/ws": "8.18.2",
+    "dependency-cruiser": "18.9.0",
+    "eslint": "10.15.0",
+    "eslint-plugin-jsdoc": "65.5.4",
+    "prettier": "3.10.1",
+    "publint": "0.3.25",
+    "tsdown": "0.23.7",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.74.0",
+    "vitest": "5.1.1",
+    "ws": "8.23.0"
+  }
+}
