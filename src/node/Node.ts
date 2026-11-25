@@ -12,7 +12,7 @@ import type { DebugEvent } from "../events/DebugEvent.js";
 import { TypedEmitter } from "../events/TypedEmitter.js";
 import { HttpClient, type FetchLike } from "../transport/http/HttpClient.js";
 import { Routes } from "../transport/http/routes.js";
-import type { SocketFactory } from "../transport/ws/SocketFactory.js";
+import type { SocketFactory, SocketHandle, SocketHandlers } from "../transport/ws/SocketFactory.js";
 import { TimerRegistry } from "../utils/TimerRegistry.js";
 import { ConnectionMachine } from "./ConnectionMachine.js";
 import { handleNodeMessage } from "./handleNodeMessage.js";
@@ -294,6 +294,20 @@ export class Node {
    */
   reconnect(): void {
     this.#machine.reconnectNow("Manual reconnect");
+  }
+
+  /**
+   * Opens an extra WebSocket on this node with the same auth headers, for example NodeLink's
+   * voice receive socket. The caller owns the socket and must close it.
+   *
+   * @param path - Path starting with `/`.
+   * @param handlers - Socket callbacks.
+   * @returns A handle for closing the socket.
+   */
+  openSocket(path: string, handlers: SocketHandlers): SocketHandle {
+    const headers = this.#upgradeHeaders();
+    delete headers["Session-Id"];
+    return this.#runtime.socketFactory(socketUrl(this.options, path), headers, handlers);
   }
 
   /**
